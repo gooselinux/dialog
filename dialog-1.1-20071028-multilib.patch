@@ -1,0 +1,32 @@
+diff -up dialog-1.1-20071028/dialog-config.in.multilib dialog-1.1-20071028/dialog-config.in
+--- dialog-1.1-20071028/dialog-config.in.multilib	2007-11-05 11:50:35.000000000 +0100
++++ dialog-1.1-20071028/dialog-config.in	2007-11-05 11:50:35.000000000 +0100
+@@ -32,7 +32,7 @@ prefix="@prefix@"
+ exec_prefix="@exec_prefix@"
+ 
+ bindir="@bindir@"
+-libdir="@libdir@"
++libdir=
+ datadir="@datadir@"
+ mandir="@mandir@"
+ includedir="@includedir@"
+@@ -74,7 +74,7 @@ ENDECHO
+ 		;;
+ 	--libs)
+ 		sed -e 's,^[ ]*,,' -e 's, [ ]*, ,g' -e 's,[ ]*$,,' <<-ENDECHO
+-			-L${exec_prefix}/lib -l${THIS} @LIBS@
++			-l${THIS}
+ ENDECHO
+ 		;;
+ 	# identification
+diff -up dialog-1.1-20071028/headers-sh.in.multilib dialog-1.1-20071028/headers-sh.in
+--- dialog-1.1-20071028/headers-sh.in.multilib	2007-07-05 02:20:18.000000000 +0200
++++ dialog-1.1-20071028/headers-sh.in	2007-11-05 12:28:24.000000000 +0100
+@@ -118,6 +118,7 @@ EOF
+ 		echo "s/\\<$name\\>/${PKGNAME}_$name/g" >>$TMPSED
+ 	done
+ 
++	echo '/_FILE_OFFSET_BITS/d' >>$TMPSED
+ 	# reduce the count if possible, since some old sed's limit is 100 lines
+ 	sort -u $TMPSED >headers.tmp
+ 	mv headers.tmp $TMPSED
